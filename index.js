@@ -2,15 +2,22 @@ const express=require('express');
 const mongoose=require('mongoose');
 const cors=require('cors');
 const bodyParser=require('body-parser')
+const formData=require('express-form-data')
 require('dotenv').config();
 
 
 //set app
 const app=express();
 
+//bodyparser middleware
+app.use(formData.parse())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
 //cors
-app.use(cors({origin:'localhost:3000'}))
-//connect to db
+app.use(cors({origin:'http://127.0.0.1:5500'}))
+
+//connect to db 
 mongoose.connect(process.env.DATABASE,{
     useUnifiedTopology:true,
     useNewUrlParser:true
@@ -25,10 +32,8 @@ mongoose.connect(process.env.DATABASE,{
 }); 
 mongoose.Promise=global.Promise; 
 
-//bodyparser middleware
-app.use(bodyParser.json());
-app.use(express.urlencoded({extended:true}))
+
 //routes middleware 
-app.use('/api',require('./routes/User'))
+app.use('/api',require('./routes/User'));
 
  

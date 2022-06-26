@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 const Schema=mongoose.Schema;
 
 const userSchema= new Schema({
-    name:{
+    username:{
         type:String,
         require:[true, 'Please enter your name']
     },
@@ -10,12 +10,11 @@ const userSchema= new Schema({
         type:String,
         require:[true,'Please enter password']
     },
-    phoneNumber:{
-        type:Number,
-        require:[true,'Please enter your Mobile number'],
+    email:{
+        type:String,
+        require:[true,'Please enter your Email Address'],
         unique:true
-    },
-    location
+    }
     
 },{
     timestamps:true

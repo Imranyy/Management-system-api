@@ -6,31 +6,32 @@ require('dotenv').config();
 
 //register user constroller
 const registerUser=asyncHandler(async(req,res)=>{
-    const {name,password,phoneNumber}=req.body
-    if(!name|| !password|| !phoneNumber){
+    const {username,email,password}=req.body
+    if(!username||!email||!password){
         res.status(400)
         throw new Error('Please add fields')
     }
     //check if user exist
-    const userExist=await User.findOne({phoneNumber});
+    const userExist=await User.findOne({email});
     if(userExist){
         res.status(400)
         throw new Error('User already Exists!!')
     }
-    //Hashing password
+    //Hashing password 
     const salt=await bcrypt.genSalt(10)
     const hashedPassword=await bcrypt.hash(password,salt);
     //create user
     const user=await User.create({
-        name,
-        password:hashedPassword,
-        phoneNumber
+        username,
+        email,
+        password:hashedPassword
+        
     })
     if(user){
         res.status(201).send({
             _id:user.id,
-            name:user.name,
-            phoneNumber:user.phoneNumber,
+            username:user.username,
+            email:user.email,
             token:generateToken(user.id)
         })
     }else{
@@ -41,14 +42,14 @@ const registerUser=asyncHandler(async(req,res)=>{
 
 //login user constroller
 const loginUser=asyncHandler(async(req,res)=>{
-    const {phoneNumber,password}=req.body;
+    const {email,password}=req.body;
     //check for user phonenumber
-    const user=await User.findOne({phoneNumber})
+    const user=await User.findOne({email})
     if(user&&(await bcrypt.compare(password,user.password))){
         res.send({
             _id:user.id,
-            name:user.name,
-            phoneNumber:user.phoneNumber,
+            name:user.username,
+            email:user.email,
             token:generateToken(user.id)
         })
     }else{
@@ -84,18 +85,18 @@ const protect=asyncHandler(async(req,res,next)=>{
  
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
-    const {_id,name,phoneNumber}=await User.findById(req.user.id)
+    const {_id,username,email}=await User.findById(req.user.id)
     res.status(200).send({
         id:_id,
-        name,
-        phoneNumber
+        username,
+        email
     })
 });
 
 //generate token
 const generateToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{
-        expiresIn:'1h'
+        expiresIn:'30d'
     })
 };
 

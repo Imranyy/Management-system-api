@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
  
-const{
+const{ 
     registerUser,
     loginUser,
     protect,
@@ -9,13 +9,12 @@ const{
 }=require('../controllers/userController')
 
 //register user
-router.post('/',registerUser);
-
+router.post('/register',registerUser);
 
 //login user
 router.post('/login',loginUser);
 
 //protected route
-router.get('/download',protect,downloadPage);
+router.get('/userdata',protect,downloadPage);
 
 module.exports=router;
