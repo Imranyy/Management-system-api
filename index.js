@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 //cors
-app.use(cors({origin:'http://127.0.0.1:5500'}))
+app.use(cors({origin:'http://localhost:3000'}))
 
 //connect to db 
 mongoose.connect(process.env.DATABASE,{
@@ -23,7 +23,7 @@ mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true
 }).then(()=>{ 
     //listening to port
-    const port=3000||process.env.PORT;
+    const port=5000||process.env.PORT;
     app.listen(port,()=>{
     console.log(`Server running at ${port}`)
   }); 

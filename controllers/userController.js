@@ -7,14 +7,20 @@ require('dotenv').config();
 //register user constroller
 const registerUser=asyncHandler(async(req,res)=>{
     const {username,email,password}=req.body
+    //check if email enter is a valid email entry and if fields are empty
+    const validEmail=(userEmail)=>{
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
+    }
     if(!username||!email||!password){
         res.status(400)
         throw new Error('Please add fields')
+    }else if(!validEmail(email)){
+        return res.send('Invalid Email')
     }
     //check if user exist
     const userExist=await User.findOne({email});
     if(userExist){
-        res.status(400)
+        res.status(401)
         throw new Error('User already Exists!!')
     }
     //Hashing password 
@@ -82,7 +88,17 @@ const protect=asyncHandler(async(req,res,next)=>{
         throw new Error('Not Authorized, No Token Available')
     }
 });
- 
+
+ //verify user controller
+ const verify=asyncHandler(async(req,res)=>{
+    try {
+        res.send(true)
+    } catch (err) {
+        console.log(err.message);
+        res.status(401).send('Not Authorized!')
+    }
+ });
+
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
     const {_id,username,email}=await User.findById(req.user.id)
@@ -104,5 +120,6 @@ module.exports={
     protect,
     registerUser,
     loginUser,
+    verify,
     downloadPage
 }
