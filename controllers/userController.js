@@ -6,7 +6,7 @@ require('dotenv').config();
 
 //register user constroller
 const registerUser=asyncHandler(async(req,res)=>{
-    const {username,email,password}=req.body
+    const {username,email,password,pic}=req.body
     //check if email enter is a valid email entry and if fields are empty
     const validEmail=(userEmail)=>{
         return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
@@ -20,7 +20,7 @@ const registerUser=asyncHandler(async(req,res)=>{
     //check if user exist
     const userExist=await User.findOne({email});
     if(userExist){
-        res.status(401)
+        res.status(400)
         throw new Error('User already Exists!!')
     }
     //Hashing password 
@@ -29,6 +29,7 @@ const registerUser=asyncHandler(async(req,res)=>{
     //create user
     const user=await User.create({
         username,
+        pic,
         email,
         password:hashedPassword
         
@@ -36,6 +37,7 @@ const registerUser=asyncHandler(async(req,res)=>{
     if(user){
         res.status(201).send({
             _id:user.id,
+            pic:user.pic,
             username:user.username,
             email:user.email,
             token:generateToken(user.id)
@@ -54,6 +56,7 @@ const loginUser=asyncHandler(async(req,res)=>{
     if(user&&(await bcrypt.compare(password,user.password))){
         res.send({
             _id:user.id,
+            pic:user.pic,
             name:user.username,
             email:user.email,
             token:generateToken(user.id)
@@ -101,11 +104,12 @@ const protect=asyncHandler(async(req,res,next)=>{
 
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
-    const {_id,username,email}=await User.findById(req.user.id)
+    const {_id,username,email,pic}=await User.findById(req.user.id)
     res.status(200).send({
         id:_id,
         username,
-        email
+        email,
+        pic
     })
 });
 

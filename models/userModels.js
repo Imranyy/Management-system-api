@@ -2,6 +2,10 @@ const mongoose=require('mongoose')
 const Schema=mongoose.Schema;
 
 const userSchema= new Schema({
+    pic:{
+        type:String,
+        unique:true
+    },
     username:{
         type:String,
         require:[true, 'Please enter your name']
