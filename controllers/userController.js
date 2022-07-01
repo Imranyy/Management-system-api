@@ -115,7 +115,7 @@ const downloadPage=asyncHandler(async(req,res)=>{
 
 //generate token
 const generateToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET||'imrany00',{
+    return jwt.sign({id},process.env.JWT_SECRET,{
         expiresIn:'30d'
     })
 };
