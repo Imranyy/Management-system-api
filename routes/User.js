@@ -1,5 +1,6 @@
 const express=require('express');
 const router=express.Router();
+const cors=require('cors');
  
 const{ 
     registerUser,
@@ -10,15 +11,15 @@ const{
 }=require('../controllers/userController')
 
 //register user
-router.post('/register',registerUser);
+router.post('/register',cors(),registerUser);
 
 //login user
-router.post('/login',loginUser);
+router.post('/login',cors(),loginUser);
 
 //verify user route
-router.get('/verify',protect,verify)
+router.get('/verify',cors(),protect,verify)
 
 //protected route
-router.get('/userdata',protect,downloadPage);
+router.get('/userdata',cors(),protect,downloadPage);
 
 module.exports=router;
