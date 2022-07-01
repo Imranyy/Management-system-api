@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 //cors
+
 app.use(cors());
 //connect to db 
 mongoose.connect(process.env.DATABASE,{
