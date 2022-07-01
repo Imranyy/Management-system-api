@@ -15,7 +15,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 //cors
-app.use(cors())
+const corsOptions={
+    origin:'https://fir-site-bb2a5.web.app',
+    optionsSuccessStatus:200
+}
+app.use(cors(corsOptions))
 
 //connect to db 
 mongoose.connect(process.env.DATABASE,{
