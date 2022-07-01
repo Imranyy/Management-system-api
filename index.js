@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //cors
 app.use(cors({origin:'http://localhost:3000'}))
+app.use(cors({origin:' https://fir-site-bb2a5.web.app'}))
+app.use(cors({origin:'https://fir-site-bb2a5.firebaseapp.com'}))
 
 //connect to db 
 mongoose.connect(process.env.DATABASE,{
