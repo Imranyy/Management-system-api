@@ -15,12 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 //cors
-const corsOptions={
-    origin:'https://fir-site-bb2a5.web.app',
-    optionsSuccessStatus:200
-}
-app.use(cors(corsOptions))
-
+app.use(cors());
 //connect to db 
 mongoose.connect(process.env.DATABASE,{
     useUnifiedTopology:true,
