@@ -5,6 +5,8 @@ const{
     registerUser,
     loginUser,
     protect,
+    deleteUser,
+    updateUser,
     verify,
     downloadPage
 }=require('../controllers/userController')
@@ -16,7 +18,13 @@ router.post('/register',registerUser);
 router.post('/login',loginUser);
 
 //verify user route
-router.get('/verify',protect,verify)
+router.get('/verify',protect,verify);
+
+//delete a User
+router.delete('/:id',deleteUser);
+
+//update user
+router.patch('/:id',updateUser)
 
 //protected route
 router.get('/userdata',protect,downloadPage);

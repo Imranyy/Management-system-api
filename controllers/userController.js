@@ -1,7 +1,8 @@
 const  User=require('../models/userModels');
 const jwt=require('jsonwebtoken');
-const bcrypt=require('bcryptjs')
-const asyncHandler=require('express-async-handler')
+const bcrypt=require('bcryptjs');
+const mongoose=require('mongoose');
+const asyncHandler=require('express-async-handler');
 require('dotenv').config();
 
 //register user constroller
@@ -67,6 +68,33 @@ const loginUser=asyncHandler(async(req,res)=>{
     }
 });
 
+//delete user
+const deleteUser=asyncHandler(async(req,res)=>{
+  const {id}=req.params;
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(404).send({error:'No such User'})
+  }
+  const deleteUserAccount=await User.findOneAndDelete({_id: id})
+  if(!deleteUserAccount){
+    return res.status(40).send({error:'No such User'})
+  }
+  res.status(200).send('Account deleted')
+});
+
+//update user
+const updateUser=asycHandler(async(req,res)=>{
+    const {id}=req.params;
+    if(!mongoose.Types.ObjectId.IsValid(id)){
+        return res.status(404).send({error:'No such User'})
+    }  
+    const updateAccount=await User.findOneAndUpdate({_id: id},{
+        ...req.body
+    })
+    if(!updateAccount){
+        return res.status(40).send({error:'No such User'})
+      }
+      res.status(200).send('updated')
+})
 //auth Middlerware
 const protect=asyncHandler(async(req,res,next)=>{
     let token
@@ -125,5 +153,7 @@ module.exports={
     registerUser,
     loginUser,
     verify,
+    deleteUser,
+    updateUser,
     downloadPage
 }
