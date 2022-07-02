@@ -20,13 +20,14 @@ router.post('/login',loginUser);
 //verify user route
 router.get('/verify',protect,verify);
 
+//protected route
+router.get('/userdata',protect,downloadPage);
+
 //delete a User
 router.delete('/:id',deleteUser);
 
 //update user
 router.patch('/:id',updateUser)
 
-//protected route
-router.get('/userdata',protect,downloadPage);
 
 module.exports=router;
