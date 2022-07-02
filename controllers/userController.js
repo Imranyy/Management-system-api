@@ -76,7 +76,7 @@ const deleteUser=asyncHandler(async(req,res)=>{
   }
   const deleteUserAccount=await User.findOneAndDelete({_id: id})
   if(!deleteUserAccount){
-    return res.status(40).send({error:'No such User'})
+    return res.status(400).send({error:'No such User'})
   }
   res.status(200).send('Account deleted')
 });
@@ -91,7 +91,7 @@ const updateUser=asyncHandler(async(req,res)=>{
         ...req.body
     })
     if(!updateAccount){
-        return res.status(40).send({error:'No such User'})
+        return res.status(400).send({error:'No such User'})
       }
       res.status(200).send('updated')
 })
