@@ -82,7 +82,7 @@ const deleteUser=asyncHandler(async(req,res)=>{
 });
 
 //update user
-const updateUser=asycHandler(async(req,res)=>{
+const updateUser=asyncHandler(async(req,res)=>{
     const {id}=req.params;
     if(!mongoose.Types.ObjectId.IsValid(id)){
         return res.status(404).send({error:'No such User'})
