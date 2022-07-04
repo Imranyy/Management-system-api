@@ -113,7 +113,7 @@ const generateToken=(id)=>{
 
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
-    const {username,email}=await User.findById(req.user.email)
+    const {_id,username,email,pic}=await User.findById(req.body._id)
     res.status(200).send({
         id:_id,
         username,
