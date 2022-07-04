@@ -103,10 +103,17 @@ const protect=asyncHandler(async(req,res,next)=>{
         res.status(401).send('Not Authorized!')
     }
  });
+ 
+//generate token
+const generateToken=(id)=>{
+    return jwt.sign({id},process.env.JWT_SECRET,{
+        expiresIn:'30d'
+    })
+};
 
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
-    const {_id,username,email,pic}=await User.findById(req.user.id)
+    const {username,email}=await User.findById(req.user.email)
     res.status(200).send({
         id:_id,
         username,
@@ -115,12 +122,6 @@ const downloadPage=asyncHandler(async(req,res)=>{
     })
 });
 
-//generate token
-const generateToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET,{
-        expiresIn:'30d'
-    })
-};
 
 //delete user
 const deleteUser=asyncHandler(async(req,res)=>{
@@ -150,7 +151,7 @@ const deleteUser=asyncHandler(async(req,res)=>{
         res.status(200).send('updated')
   })
 
-module.exports={ 
+module.exports={
     protect,
     registerUser,
     loginUser,
