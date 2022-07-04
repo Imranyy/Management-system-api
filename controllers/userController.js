@@ -113,7 +113,7 @@ const generateToken=(id)=>{
 
 //downloadpage controller
 const downloadPage=asyncHandler(async(req,res)=>{
-    const {_id,username,email,pic}=await User.findById(req.body._id)
+    const {_id,username,email,pic}=await User.findById(req.user.id)
     res.status(200).send({
         id:_id,
         username,
@@ -139,9 +139,9 @@ const deleteUser=asyncHandler(async(req,res)=>{
   //update user
   const updateUser=asyncHandler(async(req,res)=>{
       const {id}=req.params;
-      if(!mongoose.Types.ObjectId.IsValid(id)){
-          return res.status(404).send({error:'No such User'})
-      }  
+      if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).send({error:'No such User'})
+      } 
       const updateAccount=await User.findOneAndUpdate({_id: id},{
           ...req.body
       })

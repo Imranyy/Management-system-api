@@ -40,4 +40,12 @@ app.use(cors());
 //routes middleware 
 app.use('/api',require('./routes/User'));
 
+//routes middleware 
+app.use('/admin',require('./routes/admin'));
+
+//routes middleware 
+app.use('/data',require('./routes/data'));
+
+
+
  
