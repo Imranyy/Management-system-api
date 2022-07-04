@@ -23,11 +23,10 @@ router.get('/verify',protect,verify);
 //protected route
 router.get('/userdata',protect,downloadPage);
 
+//update user
+router.patch('/:id',updateUser);
+
 //delete a User
 router.delete('/:id',deleteUser);
-
-//update user
-router.patch('/:id',updateUser)
-
 
 module.exports=router;

@@ -31,10 +31,11 @@ mongoose.connect(process.env.DATABASE,{
 mongoose.Promise=global.Promise; 
 
 //cors
-const options={
+/*const options={
     origin:'https://fir-site-bb2a5.web.app'
 }
-app.use(cors(options));
+app.use(cors(options));*/
+app.use(cors());
 
 //routes middleware 
 app.use('/api',require('./routes/User'));
