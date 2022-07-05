@@ -21,14 +21,14 @@ mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true
 }).then(()=>{ 
     //listening to port
-    const port=process.env.PORT||3000;
+    const port=process.env.PORT||5000;
     app.listen(port,()=>{
     console.log(`Server running at ${port}`)
   }); 
 }).catch((err)=>{
     console.log(err)
 }); 
-mongoose.Promise=global.Promise; 
+mongoose.Promise=global.Promise;  
 
 //cors
 /*const options={

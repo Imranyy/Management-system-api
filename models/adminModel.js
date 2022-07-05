@@ -2,9 +2,8 @@ const mongoose=require('mongoose');
 const Schema=mongoose.Schema
 
 const adminSchema=new Schema({
-    id:{
-        type:String,
-        require:true
+    pic:{
+        type:String
     },
     name:{
         type:String,
@@ -15,8 +14,11 @@ const adminSchema=new Schema({
         unique:true
     },
     password:{
-        type:string,
+        type:String,
         require:true
+    },
+    token:{
+        type:String
     }
 });
 module.exports=mongoose.model('admin',adminSchema)
