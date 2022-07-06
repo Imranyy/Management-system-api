@@ -2,33 +2,30 @@ const mongoose=require("mongoose");
 const Schema=mongoose.Schema;
 
 const userOrder=new Schema({
-    user_id:{
+    email:{
         type:String,
         require:true,
-        unique:true
     },
-    order:{
-        username:{
+    username:{
             type:String,
             require:true
         },
-        choose:{
+    choose:{
             type:String,
             require:true
         },
-        media:{
+    media:{
             type:String,
             require:true
         },
-        amount:{
+    amount:{
             type:Number,
             require:true
         },
-        price:{
+    price:{
             type:Number,
             require:true
         }
-    }
 
 },{
     timestamps:true
