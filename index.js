@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 
 //connect to db 
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(process.env.LOCALURI,{
     useUnifiedTopology:true,
     useNewUrlParser:true
 }).then(()=>{ 

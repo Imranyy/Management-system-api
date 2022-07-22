@@ -44,19 +44,28 @@ const review=(req,res)=>{
 };
 
 //get user orders as history
-const history=async(req,res)=>{
-    const {email,createdAt,username,choose,media,amount,price}=await Order.findOne(req.email)
-    res.status(200).send({
-        email:email,
-        createdAt,
-        username,
-        choose,
-        media,
-        amount,
-        price
-    })
-    
+const history=(req,res)=>{
+    const email=req.body;
+    Order.findOne(email).then((hist)=>{
+        res.status(200).send({
+            email:hist.email,
+            createdAt:hist.createdAt,
+            username:hist.username,
+            choose:hist.choose,
+            media:hist.media,
+            amount:hist.amount,
+            price:hist.price
+        })
+        
+    }).catch(err=>res.send(err))
 };
+
+//get all orders
+const getAllOrder=(req,res)=>{
+ Order.find({}).then((orders)=>{
+    res.send(orders)
+ }).catch(err=>res.send(err))
+}
 
 //get reviews
 const getReviews=(req,res)=>{
@@ -77,5 +86,6 @@ module.exports={
     history,
     getReviews,
     getStats,
+    getAllOrder,
     postStat
 }

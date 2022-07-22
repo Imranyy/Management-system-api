@@ -6,6 +6,7 @@ const {
     history,
     getReviews,
     postStat,
+    getAllOrder,
     getStats
 }=require('../controllers/dataController')
 
@@ -18,8 +19,11 @@ router.post('/reviews',review);
 //post stats
 router.post('/stats',postStat)
 
-//get orders
-router.get('/orders',history);
+//get history
+router.post('/order',history);
+
+//get all orders
+router.get('/orders',getAllOrder)
 
 //get reviews
 router.get('/reviews',getReviews);
