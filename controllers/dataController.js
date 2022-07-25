@@ -40,6 +40,8 @@ const review=(req,res)=>{
            username:rev.name,
            review:rev.review
         })
+     }).catch((err)=>{
+        res.send(err)
      })
        
     
