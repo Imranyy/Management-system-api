@@ -1,5 +1,6 @@
 const Order =require('../models/userOrderModel');
 const Review=require('../models/reviewModel');
+const Request=require('../models/requestModel');
 const Stats=require('../models/statsModel')
 const asyncHandler=require('express-async-handler');
 
@@ -35,6 +36,7 @@ const postStat=(req,res)=>{
 const review=(req,res)=>{
      Review.create(req.body).then((rev)=>{
         res.status(200).send({
+           pic:rev.pic, 
            username:rev.name,
            review:rev.review
         })
@@ -43,10 +45,30 @@ const review=(req,res)=>{
     
 };
 
+//post request
+const request=(req,res)=>{
+    Request.create(req.body).then((re)=>{
+        res.status(200).send({
+           pic:re.pic,
+           name:re.name,
+           email:re.email,
+           reason:re.reason,
+           password:re.password
+        })
+    }).catch(err=>res.status(500).send(err))
+}
+
+//get requests
+const getRequest=(req,res)=>{
+   Request.find({}).sort({createdAt:-1}).then((re)=>{
+    res.send(re)
+   })
+}
+
 //get user orders as history
 const history=(req,res)=>{
     const email=req.body;
-    Order.findOne(email).then((hist)=>{
+    Order.findOne(email).sort({createdAt:-1}).then((hist)=>{
         res.status(200).send({
             email:hist.email,
             createdAt:hist.createdAt,
@@ -62,7 +84,7 @@ const history=(req,res)=>{
 
 //get all orders
 const getAllOrder=(req,res)=>{
- Order.find({}).then((orders)=>{
+ Order.find({}).sort({createdAt:-1}).then((orders)=>{
     res.send(orders)
  }).catch(err=>res.send(err))
 }
@@ -87,5 +109,7 @@ module.exports={
     getReviews,
     getStats,
     getAllOrder,
-    postStat
+    postStat,
+    request,
+    getRequest
 }

@@ -10,13 +10,12 @@ require('dotenv').config();
 
 //admin login
 const adminlogin=asyncHandler(async(req,res)=>{
-    const {email,password}=req.body;
-    const user=await Admin.findOne({email})
-    if(user&&(await bcrypt.compare(password,user.password))){
+    const {email,name}=req.body;
+    const user=await Admin.findOne({email,name})
+    if(user){
         res.send({
             _id:user.id,
-            pic:user.pic,
-            name:user.username,
+            name:user.name,
             email:user.email, 
             token:generateToken(user.id)
         })
@@ -28,7 +27,7 @@ const adminlogin=asyncHandler(async(req,res)=>{
 
 //add admin
 const addAdmin=async(req,res)=>{
-    const {name,email,password,pic}=req.body;   
+    const {name,email,password}=req.body;   
     //check if user exist
     const userExist=await Admin.findOne({email});
     if(userExist){
@@ -40,7 +39,6 @@ const addAdmin=async(req,res)=>{
     //create user
     const admin=await Admin.create({
         name,
-        pic, 
         email,
         password:hashedPassword
         
@@ -48,7 +46,6 @@ const addAdmin=async(req,res)=>{
     if(admin){
         res.status(201).send({
             id:admin._id,
-            pic:admin.pic,
             admin_name:admin.name,
             email:admin.email,
             token:generateToken(admin.id)

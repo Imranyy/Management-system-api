@@ -2,6 +2,10 @@ const mongoose=require("mongoose");
 const Schema=mongoose.Schema;
 
 const userOrder=new Schema({
+    pic:{
+        type:String,
+        require:true
+    },
     email:{
         type:String,
         require:true,

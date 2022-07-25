@@ -2,6 +2,10 @@ const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
 const reviewSchema=new Schema({
+    pic:{
+        type:String,
+        unique:true
+    },
     name:{
         type:String,
         require:true
@@ -10,5 +14,7 @@ const reviewSchema=new Schema({
         type:String,
         require:true
     }
+},{
+    timestamps:true
 })
 module.exports=mongoose.model('review',reviewSchema);

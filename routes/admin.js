@@ -22,13 +22,13 @@ router1.post('/login',adminlogin);
 router1.post('/add',addAdmin)
 
 //get admin userinfo
-router1.get('/getAllUsers',protect,getUserdata);
+router1.get('/getAllUsers',getUserdata);
 
 //get Admin data
-router1.get('/data',protect,getAdmin);
+router1.get('/data',getAdmin);
 
 //get all admins
-router1.get('/admins',protect,getAllAdmins);
+router1.get('/admins',getAllAdmins);
 
 //verify
 router1.get('/adminVerify',protect,verify)
