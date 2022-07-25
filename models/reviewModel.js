@@ -4,6 +4,7 @@ const Schema=mongoose.Schema;
 const reviewSchema=new Schema({
     pic:{
         type:String,
+        unique:false,
         require:true
     },
     name:{
